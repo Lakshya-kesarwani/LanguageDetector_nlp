@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Detection and Translation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(180deg,rgb(9, 32, 137),rgb(116, 111, 122));
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+        }
+
+        textarea {
+            resize: none;
+            min-height: 100px;
+            max-height: 200px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0056b3, #004085);
+            transform: scale(1.05);
+        }
+
+        .result-section {
+            border-top: 2px solid #ddd;
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .result-section h4 {
+            font-size: 18px;
+            color: #333;
+            font-weight: 600;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Language Detection & Translation</h1>
+        <form method="post" action="/trans">
+            <div class="form-group">
+                <label for="text">Enter Text</label>
+                <textarea class="form-control" id="text" name="text" rows="3" required>{{ text }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="target_lang">Select Target Language</label>
+                <select class="form-control" id="target_lang" name="target_lang" required>
+                    {% for lang_code, lang_name in languages.items() %}
+                        <option value="{{ lang_code }}">{{ lang_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Translate</button>
+        </form>
+
+        {% if translation %}
+            <div class="result-section">
+                <h4>Detected Language: <span style="color: #007bff;">{{ detected_lang }}</span></h4>
+                <h4>Translation: <span style="color: #28a745;">{{ translation }}</span></h4>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
